@@ -9,6 +9,7 @@ from utils import serialize_qp, deserialize_qp
 
 envs.register_environment("mimic", Mimic)
 
+st.set_page_config(layout="wide")
 st.title("CS6323 - Project")
 st.subheader("Shubham Shekhar Jha (sxj220028)")
 st.subheader("Vedant Sapra (vks220000)")
@@ -19,12 +20,12 @@ def main():
     it_c1, it_c2 = iter_cntnr.columns(2)
 
     with it_c1:
-        st.components.v1.html(render_npy("default_50it.npy"), height=400, width=500)
-        st.components.v1.html(render_npy("default_200it.npy"), height=400, width=500)
+        st.components.v1.html(render_npy("default_50it.npy"), height=350, width=700)
+        st.components.v1.html(render_npy("default_200it.npy"), height=350, width=700)
 
     with it_c2:
-        st.components.v1.html(render_npy("default_200it.npy"), height=400, width=500)
-        st.components.v1.html(render_npy("default_200it.npy"), height=400, width=500)
+        st.components.v1.html(render_npy("default_500it.npy"), height=350, width=700)
+        st.components.v1.html(render_npy("default_200it.npy"), height=350, width=700)
 
 
 def render_npy(npy_name):
