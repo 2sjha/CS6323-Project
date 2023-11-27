@@ -25,7 +25,7 @@ def main():
 
     with it_c2:
         st.components.v1.html(render_npy("default_500it.npy"), height=350, width=700)
-        st.components.v1.html(render_npy("default_200it.npy"), height=350, width=700)
+        st.components.v1.html(render_npy("default_1000it.npy"), height=350, width=700)
 
 
 def render_npy(npy_name):
