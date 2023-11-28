@@ -20,56 +20,101 @@ def main():
     """
     Main function to render all elements
     """
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.header("Number of Interations")
-    st.write("In 200 iterations, it does not stick the landing perfectly. In 500 and 1000 iterations, it sticks the landing perfectly but 500 iterations has its legs spaced out during the backflip and at landing.")
-    iter_cntnr = st.container()
-    it_c1, it_c2 = iter_cntnr.columns(2)
+    tabs = [
+        "Iterations",
+        "Demo Replay",
+        "Environments",
+        "Learning Rate",
+        "Reward Scaling",
+    ]
+    it_tab, dr_tab, env_tab, lr_tab, rs_tab = st.tabs(tabs)
 
-    with it_c1:
-        st.write("50 iterations")
-        st.components.v1.html(render_npy("./data/default_50it.npy"), height=350, width=700)
-        st.write("500 iterations")
-        st.components.v1.html(render_npy("./data/default_500it.npy"), height=350, width=700)
+    with it_tab:
+        st.header("Number of Interations")
+        st.write(
+            "In 200 iterations, it does not stick the landing perfectly. In 500 and 1000 iterations, it sticks the landing perfectly but 500 iterations has its legs spaced out during the backflip and at landing."
+        )
+        iter_cntnr = st.container()
+        it_c1, it_c2 = iter_cntnr.columns(2)
 
-    with it_c2:
-        st.write("200 iterations")
-        st.components.v1.html(render_npy("./data/default_200it.npy"), height=350, width=700)
-        st.write("1000 iterations")
-        st.components.v1.html(render_npy("./data/default_1000it.npy"), height=350, width=700)
+        with it_c1:
+            st.write("50 iterations")
+            st.components.v1.html(
+                render_npy("./data/default_50it.npy"), height=350, width=700
+            )
+            st.write("500 iterations")
+            st.components.v1.html(
+                render_npy("./data/default_500it.npy"), height=350, width=700
+            )
 
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.header("Demo Replay")
-    dm_cntnr = st.container()
-    dm_c1, dm_c2 = dm_cntnr.columns(2)
-    with dm_c1:
-        st.write("Demo Replay Mode: None")
-        st.components.v1.html(render_npy("./data/no_demoreplay_300it.npy"), height=350, width=700)
-    with dm_c2:
-        st.write("Demo Replay Mode: threshold, threshold value = 0.5")
-        st.components.v1.html(render_npy("./data/threshold_0.5_300it.npy"), height=350, width=700)
+        with it_c2:
+            st.write("200 iterations")
+            st.components.v1.html(
+                render_npy("./data/default_200it.npy"), height=350, width=700
+            )
+            st.write("1000 iterations")
+            st.components.v1.html(
+                render_npy("./data/default_1000it.npy"), height=350, width=700
+            )
 
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.header("Number of Training and Evaluation environments")
-    envs_cntnr = st.container()
-    with envs_cntnr:
-        st.write("Training envs = 300, Evaluation envs = 32")
-        st.components.v1.html(render_npy("./data/envs_330,32_300it.npy"), height=350, width=700)
+    with dr_tab:
+        st.header("Demo Replay")
+        dm_cntnr = st.container()
+        dm_c1, dm_c2, dm_c3 = dm_cntnr.columns(3)
+        with dm_c1:
+            st.write("Demo Replay Mode: threshold, threshold value = 0.4")
+            st.components.v1.html(
+                render_npy("./data/default_500it.npy"), height=350, width=700
+            )
+        with dm_c2:
+            st.write("Demo Replay Mode: None")
+            st.components.v1.html(
+                render_npy("./data/no_demoreplay_300it.npy"), height=350, width=700
+            )
+        with dm_c3:
+            st.write("Demo Replay Mode: threshold, threshold value = 0.5")
+            st.components.v1.html(
+                render_npy("./data/threshold_0.5_300it.npy"), height=350, width=700
+            )
 
-    # st.markdown("<hr>", unsafe_allow_html=True)
-    # st.header("Learning Rate")
-    # envs_cntnr = st.container()
-    # with envs_cntnr:
-    #     st.write("Learning Rate = 0.001")
-    #     st.components.v1.html(render_npy("./data/lr_0,001_300it.npy"), height=350, width=700)
+    with env_tab:
+        st.header("Number of Training and Evaluation environments")
+        envs_cntnr = st.container()
+        with envs_cntnr:
+            st.write("Training envs = 300, Evaluation envs = 32")
+            st.components.v1.html(
+                render_npy("./data/envs_330,32_300it.npy"), height=350, width=700
+            )
 
-    # st.markdown("<hr>", unsafe_allow_html=True)
-    # st.header("Reward Scaling")
-    # envs_cntnr = st.container()
-    # with envs_cntnr:
-    #     st.write("Reward Scaling = 0.01")
-    #     st.components.v1.html(render_npy("./data/reward_scaling_0,1_300it.npy"), 
-    #                           height=350, width=700)
+    with lr_tab:
+        st.header("Learning Rate")
+        lr_cntnr = st.container()
+        lr_c1, lr_c2 = lr_cntnr.columns(2)
+        with lr_c1:
+            st.write("Default Learning Rate = 0.0003")
+            st.components.v1.html(
+                render_npy("./data/default_500it.npy"), height=350, width=700
+            )
+        with lr_c2:
+            st.write("Learning Rate = 0.001")
+            st.components.v1.html(
+                render_npy("./data/lr_0,001_300it.npy"), height=350, width=700
+            )
+
+    with rs_tab:
+        st.header("Reward Scaling")
+        rs_cntnr = st.container()
+        rs_c1, rs_c2 = rs_cntnr.columns(2)
+        with rs_c1:
+            st.write("Default Reward Scaling = 0.002")
+            st.components.v1.html(
+                render_npy("./data/default_500it.npy"), height=350, width=700
+            )
+        with rs_c2:
+            st.write("Reward Scaling = 0.01")
+            st.components.v1.html(
+                render_npy("./data/reward_scaling_0,1_300it.npy"), height=350, width=700
+            )
 
 
 def render_npy(npy_name):
@@ -87,7 +132,7 @@ def render_npy(npy_name):
         system_config=HumanoidSystemConfig,
         reference_traj=t,
         obs_type="timestamp",
-        cyc_len=54
+        cyc_len=54,
     )
     return html.render(env.sys, rollout_qp)
 
