@@ -11,7 +11,7 @@ from utils import serialize_qp, deserialize_qp
 envs.register_environment("mimic", Mimic)
 
 st.set_page_config(layout="wide")
-st.title("CS6323 - Project: Diffmimic")
+st.title("CS6323 - Project: DiffMimic")
 st.subheader("Shubham Shekhar Jha (sxj220028)")
 st.subheader("Vedant Sapra (vks220000)")
 
@@ -31,8 +31,14 @@ def main():
 
     with it_tab:
         st.header("Number of Interations")
-        st.write(
-            "In 200 iterations, it does not stick the landing perfectly. In 500 and 1000 iterations, it sticks the landing perfectly but 500 iterations has its legs spaced out during the backflip and at landing."
+        st.markdown(
+            """
+            In 50 iterations the model barely learns anything and the policy learned is nowhere 
+            close to the intended backflip. In 200 iterations, the landing is not optimal and 
+            the humanoid is not stable after its landing.
+            In 500 and 1000 iterations, it sticks the landing perfectly but 500 iterations has 
+            its legs spaced out during the backflip and at landing.
+            """
         )
         iter_cntnr = st.container()
         it_c1, it_c2 = iter_cntnr.columns(2)
@@ -59,6 +65,14 @@ def main():
 
     with dr_tab:
         st.header("Demo Replay")
+        st.markdown(
+            """
+            With demo replay enabled (with threshold value 0.5) - The model performs 
+            reasonably well but the landing is unstable as seen below.
+            Without demo replay, the humanoid has the hand motions seemingly right 
+            in the beginning but one of the legs stays grounded during the entire flip. 
+            """
+        )
         dm_cntnr = st.container()
         dm_c1, dm_c2, dm_c3 = dm_cntnr.columns(3)
         with dm_c1:
@@ -79,15 +93,29 @@ def main():
 
     with env_tab:
         st.header("Number of Training and Evaluation environments")
+        st.markdown(
+            """
+            With 300, 32 environments for training and evaluation respectively, the learned policy 
+            is reasonably similar to the configuration above and takes about 30 minutes to complete, 
+            about 10 minutes less than the default configuration
+            150, 16.
+            """
+        )
         envs_cntnr = st.container()
         with envs_cntnr:
             st.write("Training envs = 300, Evaluation envs = 32")
             st.components.v1.html(
-                render_npy("./data/envs_330,32_300it.npy"), height=350, width=700
+                render_npy("./data/envs_300,32_300it.npy"), height=350, width=700
             )
 
     with lr_tab:
         st.header("Learning Rate")
+        st.markdown(
+            """
+            With learning rate = 0.001, The model tries to converge faster but ends up in an 
+            unstable position while landing even though the backflip was executed well.
+            """
+        )
         lr_cntnr = st.container()
         lr_c1, lr_c2 = lr_cntnr.columns(2)
         with lr_c1:
@@ -103,6 +131,12 @@ def main():
 
     with rs_tab:
         st.header("Reward Scaling")
+        st.markdown(
+            """
+            With reward scaling = 0.01, we observe that the humanoid does not stick the landing 
+            very well even after performing a better backflip than the default configuration. 
+            """
+        )
         rs_cntnr = st.container()
         rs_c1, rs_c2 = rs_cntnr.columns(2)
         with rs_c1:
@@ -116,7 +150,8 @@ def main():
                 render_npy("./data/reward_scaling_0,1_300it.npy"), height=350, width=700
             )
 
-    st.markdown("""
+    st.markdown(
+        """
                 ## Citation
                 If you find our work useful for your research, please consider citing the paper:
                 ```
@@ -127,13 +162,18 @@ def main():
                 year      = {2023},
                 }
                 ```
-                """)
-    st.markdown("""
-                ### Our trimmed version of Diffmimic: https://github.com/2sjha/CS6323-diffmimic/
-                """)
-    st.markdown("""
+                """
+    )
+    st.markdown(
+        """
+                ### Our adaptation of Diffmimic: https://github.com/2sjha/CS6323-diffmimic/
+                """
+    )
+    st.markdown(
+        """
                 ### Source code for this visualization: https://github.com/2sjha/CS6323-Project/
-                """)
+                """
+    )
 
 
 def render_npy(npy_name):
