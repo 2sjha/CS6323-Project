@@ -129,10 +129,10 @@ def main():
                 ```
                 """)
     st.markdown("""
-                ## Our trimmed version of Diffmimic: https://github.com/2sjha/CS6323-diffmimic/
+                ### Our trimmed version of Diffmimic: https://github.com/2sjha/CS6323-diffmimic/
                 """)
     st.markdown("""
-                ## Source code for this visualization: https://github.com/2sjha/CS6323-Project/
+                ### Source code for this visualization: https://github.com/2sjha/CS6323-Project/
                 """)
 
 
