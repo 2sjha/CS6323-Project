@@ -1,3 +1,6 @@
+"""
+Utils used in visualization
+"""
 import brax
 import jax.numpy as jnp
 from brax import QP
@@ -35,6 +38,9 @@ def serialize_qp(qp) -> jnp.array:
 
 
 def quaternion_to_matrix(quaternions):
+    """
+    Converts Quaternions to a 3x3 matrix
+    """
     r, i, j, k = (
         quaternions[..., 0],
         quaternions[..., 1],
@@ -61,47 +67,15 @@ def quaternion_to_matrix(quaternions):
 
 
 def matrix_to_rotation_6d(matrix):
+    """
+    Converts 3x3 rotation matrix to 6D rotation matrix
+    """
     batch_dim = matrix.shape[:-2]
     return matrix[..., :2, :].reshape(batch_dim + (6,))
 
 
 def quaternion_to_rotation_6d(quaternion):
+    """
+    Converts qauternions to 6D rotation matrix
+    """
     return matrix_to_rotation_6d(quaternion_to_matrix(quaternion))
-
-
-def loss_l2_relpos(qp, ref_qp):
-    pos, ref_pos = qp.pos[:-1], ref_qp.pos[:-1]
-    relpos, ref_relpos = (pos - pos[0])[1:], (ref_pos - ref_pos[0])[1:]
-    relpos_loss = (((relpos - ref_relpos) ** 2).sum(-1) ** 0.5).mean()
-    return relpos_loss
-
-
-def loss_l2_pos(qp, ref_qp):
-    pos, ref_pos = qp.pos[:-1], ref_qp.pos[:-1]
-    pos_loss = (((pos - ref_pos) ** 2).sum(-1) ** 0.5).mean()
-    return pos_loss
-
-
-def mse_pos(qp, ref_qp):
-    pos, ref_pos = qp.pos[:-1], ref_qp.pos[:-1]
-    pos_loss = ((pos - ref_pos) ** 2).sum(-1).mean()
-    return pos_loss
-
-
-def mse_rot(qp, ref_qp):
-    rot = quaternion_to_rotation_6d(qp.rot[:-1])
-    ref_rot = quaternion_to_rotation_6d(ref_qp.rot[:-1])
-    rot_loss = ((rot - ref_rot) ** 2).sum(-1).mean()
-    return rot_loss
-
-
-def mse_vel(qp, ref_qp):
-    vel, ref_vel = qp.vel[:-1], ref_qp.vel[:-1]
-    vel_loss = ((vel - ref_vel) ** 2).sum(-1).mean()
-    return vel_loss
-
-
-def mse_ang(qp, ref_qp):
-    ang, ref_ang = qp.ang[:-1], ref_qp.ang[:-1]
-    ang_loss = ((ang - ref_ang) ** 2).sum(-1).mean()
-    return ang_loss
