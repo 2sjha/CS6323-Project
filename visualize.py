@@ -64,17 +64,17 @@ def main():
         with dm_c1:
             st.write("Demo Replay Mode: threshold, threshold value = 0.4")
             st.components.v1.html(
-                render_npy("./data/default_500it.npy"), height=350, width=700
+                render_npy("./data/default_500it.npy"), height=350, width=500
             )
         with dm_c2:
             st.write("Demo Replay Mode: None")
             st.components.v1.html(
-                render_npy("./data/no_demoreplay_300it.npy"), height=350, width=700
+                render_npy("./data/no_demoreplay_300it.npy"), height=350, width=500
             )
         with dm_c3:
             st.write("Demo Replay Mode: threshold, threshold value = 0.5")
             st.components.v1.html(
-                render_npy("./data/threshold_0.5_300it.npy"), height=350, width=700
+                render_npy("./data/threshold_0.5_300it.npy"), height=350, width=500
             )
 
     with env_tab:
@@ -115,6 +115,25 @@ def main():
             st.components.v1.html(
                 render_npy("./data/reward_scaling_0,1_300it.npy"), height=350, width=700
             )
+
+    st.markdown("""
+                ## Citation
+                If you find our work useful for your research, please consider citing the paper:
+                ```
+                @inproceedings{ren2023diffmimic,
+                author    = {Ren, Jiawei and Yu, Cunjun and Chen, Siwei and Ma, Xiao and Pan, Liang and Liu, Ziwei},
+                title     = {DiffMimic: Efficient Motion Mimicking with Differentiable Physics},
+                journal   = {ICLR},
+                year      = {2023},
+                }
+                ```
+                """)
+    st.markdown("""
+                ## Our trimmed version of Diffmimic: https://github.com/2sjha/CS6323-diffmimic/
+                """)
+    st.markdown("""
+                ## Source code for this visualization: https://github.com/2sjha/CS6323-Project/
+                """)
 
 
 def render_npy(npy_name):
